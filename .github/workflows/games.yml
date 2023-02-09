@@ -18,6 +18,9 @@ jobs:
         game:
           - source
           - rust
+    permissions:
+      contents: read
+      packages: write
     steps:
       - uses: actions/checkout@v3
       - uses: docker/setup-buildx-action@v2
