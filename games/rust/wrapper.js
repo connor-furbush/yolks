@@ -59,7 +59,7 @@ function initialListener(data) {
 	}
 }
 
-function initialListner2(data) {
+function initialListener2(data) {
 	const data2 = data.toString();
 	console.log(data2)
 }
