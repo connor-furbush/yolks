@@ -124,7 +124,8 @@ var poll = function () {
 
 	ws.on("error", function (err) {
 		waiting = true;
-		console.log("Waiting for RCON to come up...");
+		console.log("\nWaiting for RCON service to start...");
+		console.log("This process may take 5+ minutes. If you believe your server is stuck, please check your log folder for errors.");
 		setTimeout(poll, 5000);
 	});
 
