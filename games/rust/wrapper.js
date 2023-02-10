@@ -39,6 +39,8 @@ console.log("Starting Rust...");
 
 var exited = false;
 const gameProcess = exec(startupCmd);
+gameProcess.stdout.on('data', filter);
+gameProcess.stderr.on('data', filter);
 gameProcess.on('exit', function (code, signal) {
 	exited = true;
 
@@ -57,6 +59,7 @@ function initialListener(data) {
 	}
 }
 process.stdin.resume();
+process.stadout.resume();
 process.stdin.setEncoding("utf8");
 process.stdin.on('data', initialListener);
 
@@ -92,6 +95,8 @@ var poll = function () {
 		ws.send(createPacket('status'));
 
 		process.stdin.removeListener('data', initialListener);
+		gameProcess.stdout.removeListener('data', filter);
+		gameProcess.stderr.removeListener('data', filter);
 		process.stdin.on('data', function (text) {
 			ws.send(createPacket(text));
 		});
@@ -120,8 +125,7 @@ var poll = function () {
 
 	ws.on("error", function (err) {
 		waiting = true;
-		console.log("Waiting for RCON Service to start...");
-		console.log("This process may take 5+ minutes. If you believe your service is stuck, please check your logs folder.");
+		console.log("Waiting for RCON to come up...");
 		setTimeout(poll, 5000);
 	});
 
