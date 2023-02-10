@@ -22,13 +22,25 @@ if (startupCmd.length < 1) {
 
 const seenPercentage = {};
 
+function filter(data) {
+	const str = data.toString();
+	if (str.startsWith("Loading Prefab Bundle ")) { // Rust seems to spam the same percentage, so filter out any duplicates.
+		const percentage = str.substr("Loading Prefab Bundle ".length);
+		if (seenPercentage[percentage]) return;
+
+		seenPercentage[percentage] = true;
+	}
+
+	console.log(str);
+}
+
 var exec = require("child_process").exec;
 console.log("Starting Rust...");
 
 var exited = false;
 const gameProcess = exec(startupCmd);
-gameProcess.stdout.on('data');
-gameProcess.stderr.on('data');
+gameProcess.stdout.on('data', filter);
+gameProcess.stderr.on('data', filter);
 gameProcess.on('exit', function (code, signal) {
 	exited = true;
 
@@ -81,6 +93,9 @@ var poll = function () {
 		// Hack to fix broken console output
 		ws.send(createPacket('status'));
 
+		process.stdin.removeListener('data', initialListener);
+		gameProcess.stdout.removeListener('data', filter);
+		gameProcess.stderr.removeListener('data', filter);
 		process.stdin.on('data', function (text) {
 			ws.send(createPacket(text));
 		});
