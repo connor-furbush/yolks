@@ -39,7 +39,7 @@ console.log("Starting Rust...");
 
 var exited = false;
 const gameProcess = exec(startupCmd);
-gameProcess.stdout.on('data', console.log);
+gameProcess.stdout.on('data', filter);
 gameProcess.stderr.on('data', filter);
 gameProcess.on('exit', function (code, signal) {
 	exited = true;
@@ -58,8 +58,6 @@ function initialListener(data) {
 		console.log('Unable to run "' + command + '" due to RCON not being connected yet.');
 	}
 }
-
-process.stdout.on('data', console.log);
 process.stdin.resume();
 process.stdin.setEncoding("utf8");
 process.stdin.on('data', initialListener);
@@ -96,6 +94,8 @@ var poll = function () {
 		ws.send(createPacket('status'));
 
 		process.stdin.removeListener('data', initialListener);
+		gameProcess.stdout.removeListener('data', filter);
+		gameProcess.stderr.removeListener('data', filter);
 		process.stdin.on('data', function (text) {
 			ws.send(createPacket(text));
 		});
