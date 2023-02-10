@@ -39,7 +39,7 @@ console.log("Starting Rust...");
 
 var exited = false;
 const gameProcess = exec(startupCmd);
-gameProcess.stdout.on('data', filter);
+gameProcess.stdout.on('data', console.log);
 gameProcess.stderr.on('data', filter);
 gameProcess.on('exit', function (code, signal) {
 	exited = true;
@@ -59,14 +59,7 @@ function initialListener(data) {
 	}
 }
 
-function initialListener2(data) {
-	const data2 = data.toString();
-	console.log(data2)
-}
-
-
 process.stdin.resume();
-process.stdout.on('data', initialListener2);
 process.stdin.setEncoding("utf8");
 process.stdin.on('data', initialListener);
 
