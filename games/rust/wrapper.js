@@ -58,8 +58,15 @@ function initialListener(data) {
 		console.log('Unable to run "' + command + '" due to RCON not being connected yet.');
 	}
 }
+
+function initialListner2(data) {
+	const data2 = data.toString();
+	console.log(data2)
+}
+
+
 process.stdin.resume();
-process.stdout.resume();
+process.stdout.on('data', initialListener2);
 process.stdin.setEncoding("utf8");
 process.stdin.on('data', initialListener);
 
