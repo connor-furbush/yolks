@@ -59,7 +59,7 @@ function initialListener(data) {
 	}
 }
 process.stdin.resume();
-process.stadout.resume();
+process.stdout.resume();
 process.stdin.setEncoding("utf8");
 process.stdin.on('data', initialListener);
 
