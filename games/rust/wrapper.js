@@ -81,9 +81,6 @@ var poll = function () {
 		// Hack to fix broken console output
 		ws.send(createPacket('status'));
 
-		process.stdin.removeListener('data', initialListener);
-		gameProcess.stdout.removeListener('data');
-		gameProcess.stderr.removeListener('data');
 		process.stdin.on('data', function (text) {
 			ws.send(createPacket(text));
 		});
