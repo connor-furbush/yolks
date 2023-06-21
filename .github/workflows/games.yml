@@ -20,6 +20,7 @@ jobs:
           - sourceTest2
           - rust
           - rustStaging
+          - mcc
     permissions:
       contents: read
       packages: write
