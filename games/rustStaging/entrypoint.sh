@@ -14,10 +14,10 @@ echo ":/home/container$ ${MODIFIED_STARTUP}"
 # OxideMod has been replaced with uMod
 if [ -f OXIDE_FLAG ] || [ "${OXIDE}" = 1 ] || [ "${UMOD}" = 1 ]; then
     echo "Updating uMod..."
-    curl -sSL "https://ci.appveyor.com/api/projects/oxidemod/oxide-rust/artifacts/Oxide.Rust-linux-staging.zip?pr=false&branch=staging" > umod.zip
+    curl -sSL "https://downloads.oxidemod.com/artifacts/Oxide.Rust/staging/Oxide.Rust-linux.zip" > umod.zip
     unzip -o -q umod.zip
     rm umod.zip
-    echo "Done updating Oxide from : https://ci.appveyor.com/api/projects/oxidemod/oxide-rust/artifacts/Oxide.Rust-linux-staging.zip?pr=false&branch=staging!"
+    echo "Done updating Oxide from : https://downloads.oxidemod.com/artifacts/Oxide.Rust/staging/Oxide.Rust-linux.zip!"
 fi
 
 # Fix for Rust not starting
